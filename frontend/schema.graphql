@@ -1,0 +1,24 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+input LoginCred {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  SignupUser(user: User): String!
+}
+
+type Query {
+  verifyLoginUser(loginCred: LoginCred): Boolean
+}
+
+input User {
+  email: String!
+  firstName: String!
+  lastName: String
+  password: String!
+}

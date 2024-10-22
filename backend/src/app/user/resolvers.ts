@@ -10,7 +10,11 @@ const queries = {
                 password: loginCred.password
             }
         })
-        return user ? true : false
+        if (!user) {
+            throw new Error("incorrect email or password")
+        }
+        const token = JWT.createToken(user)
+        return token
     },
 }
 

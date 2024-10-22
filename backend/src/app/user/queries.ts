@@ -1,4 +1,4 @@
 export const queries = `#graphql
-    verifyLoginUser(loginCred: LoginCred): Boolean
+    verifyLoginUser(loginCred: LoginCred): String
 `;
 
