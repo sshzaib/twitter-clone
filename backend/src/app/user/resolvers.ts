@@ -54,4 +54,20 @@ const mutations = {
     }
 }
 
-export const resolvers = {queries, mutations}
+const extraResolvers = {
+    User: {
+        async tweets(parent: any, args: any, cxt: GraphqlContext) {
+            console.log(parent)
+            const tweets = await prismaClient.tweet.findMany({
+                where: {
+                    authorId: parent.id
+                }
+            })
+            console.log(tweets)
+            return tweets
+        }
+    }
+}
+
+
+export const resolvers = {queries, mutations, extraResolvers}

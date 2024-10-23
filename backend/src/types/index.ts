@@ -6,3 +6,9 @@ export interface JwtUser {
 export interface GraphqlContext {
     user?: JwtUser
 }
+
+export interface CreateTweet {
+    data: {
+        content: string
+    }
+}

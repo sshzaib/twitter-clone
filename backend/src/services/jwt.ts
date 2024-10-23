@@ -13,7 +13,6 @@ export class JWT {
      public static async decodeJwtToken(token: string) {
         try {
             const payload = jwt.verify(token, process.env.JWT_SECRET)
-            console.log(payload)
             return payload
         } catch (error) {
             console.log(error)

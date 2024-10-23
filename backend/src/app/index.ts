@@ -5,6 +5,7 @@ import { JWT } from '../services/jwt'
 import cors from 'cors';
 import express from 'express';
 import { GraphqlContext } from '../types';
+import { Tweet } from './tweet';
 
 
 export async function initServer() {
@@ -12,22 +13,29 @@ export async function initServer() {
 
     const typeDefs = `#graphql
         ${User.types}
+        ${Tweet.types}
 
         type Query {
             ${User.queries}
+            ${Tweet.queries}
         }
 
         type Mutation {
             ${User.mutations}
+            ${Tweet.mutations}
         }
     `
     const resolvers = {
         Query: {
-            ...User.resolvers.queries
+            ...User.resolvers.queries,
+            ...Tweet.resolvers.queries
         },
         Mutation: {
-            ...User.resolvers.mutations
-        }
+            ...User.resolvers.mutations,
+            ...Tweet.resolvers.mutations
+        },
+        ...Tweet.resolvers.extraResolvers,
+        ...User.resolvers.extraResolvers
     }
     const server = new ApolloServer<GraphqlContext>({
         typeDefs,
@@ -41,7 +49,7 @@ export async function initServer() {
         express.json(),
         expressMiddleware(server, {
             context: async ({ req }) => {
-                return req.headers.authorization ? { user: JWT.decodeJwtToken(req.headers.authorization.split(" ")[1])} : null
+                return req.headers.authorization ? { user: await JWT.decodeJwtToken(req.headers.authorization.split(" ")[1])} : null
             }
         }),
       );
