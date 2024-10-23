@@ -47,29 +47,38 @@ const navbarList = [
 export const Layout: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const data = useGetCurrentUser()
-  return (
-    <div className="grid grid-cols-12 h-screen w-screen">
-      <div className="col-span-3 h-screen sticky top-0 flex justify-end pr-10">
-        {/* @ts-ignore */}
-      <Sidebar user = {data}/>
-      </div>
-      <div className="col-span-9 h-screen overflow-y-auto">
-        <div className="grid grid-cols-12 h-full">
-          <div className="col-span-6 border-x border-slate-600">{children}</div>
-          <div className="col-span-6">
-            <PeopleRecommendation />
+  const {data, isLoading} = useGetCurrentUser()
+  if (isLoading) {
+      return <>
+        <div className="flex items-center justify-center h-screen">
+          <FaXTwitter className="text-6xl" />
+        </div>
+      </>
+    
+  }
+  if (data) {
+    return (
+      <div className="grid grid-cols-12 h-screen w-screen">
+        <div className="col-span-3 h-screen sticky top-0 flex justify-end pr-10">
+        <Sidebar user = {data}/>
+        </div>
+        <div className="col-span-9 h-screen overflow-y-auto">
+          <div className="grid grid-cols-12 h-full">
+            <div className="col-span-6 border-x border-slate-600">{children}</div>
+            <div className="col-span-6">
+              <PeopleRecommendation />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  } 
+   
 };
 
 
 
 const Sidebar: React.FC<{user: SignupUser}> = ({user}) => {
-  console.log(user)
   return (
     <div>
       <div className="cursor-pointer hover:bg-slate-900 w-fit rounded-full p-3 transition-all">
