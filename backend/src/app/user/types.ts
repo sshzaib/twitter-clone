@@ -4,7 +4,14 @@ export const types = `#graphql
         password: String!
     }
 
-    input User {
+    input SignupUser {
+        firstName: String!
+        lastName: String
+        email: String!
+        password: String!
+    }
+
+    type User {
         firstName: String!
         lastName: String
         email: String!

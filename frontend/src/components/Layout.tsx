@@ -7,6 +7,10 @@ import { FaRegEnvelope } from "react-icons/fa";
 import React, { useState } from "react";
 import { CiCircleMore } from "react-icons/ci";
 import { BsThreeDots } from "react-icons/bs";
+import { useGetCurrentUser } from "../hooks/user";
+import { SignupUser } from "../gql/graphql";
+import { FaRegCircleUser } from "react-icons/fa6";
+
 
 const navbarList = [
   {
@@ -43,10 +47,12 @@ const navbarList = [
 export const Layout: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const data = useGetCurrentUser()
   return (
     <div className="grid grid-cols-12 h-screen w-screen">
       <div className="col-span-3 h-screen sticky top-0 flex justify-end pr-10">
-      <Sidebar />
+        {/* @ts-ignore */}
+      <Sidebar user = {data}/>
       </div>
       <div className="col-span-9 h-screen overflow-y-auto">
         <div className="grid grid-cols-12 h-full">
@@ -60,7 +66,10 @@ export const Layout: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-const Sidebar: React.FC = () => {
+
+
+const Sidebar: React.FC<{user: SignupUser}> = ({user}) => {
+  console.log(user)
   return (
     <div>
       <div className="cursor-pointer hover:bg-slate-900 w-fit rounded-full p-3 transition-all">
@@ -86,13 +95,17 @@ const Sidebar: React.FC = () => {
           Post
         </button>
       </div>
-      <div className="absolute bottom-5 flex items-center gap-4 hover:bg-[#181818] cursor-pointer rounded-full p-3 ">
+      <div className="absolute bottom-5 flex items-center gap-4 hover:bg-[#181818] cursor-pointer rounded-full p-3">
+        <div className="text-3xl">
+          <FaRegCircleUser />
+        </div>
         <div className="flex flex-col ">
           <div className="font-medium flex text-sm">
+            {user.firstName} {user.lastName}
           </div>
         </div>
         <div>
-          <BsThreeDots />
+           <BsThreeDots /> 
         </div>
       </div>
     </div>

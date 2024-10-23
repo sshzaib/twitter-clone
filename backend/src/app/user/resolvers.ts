@@ -1,6 +1,7 @@
 import { User } from "@prisma/client"
 import { prismaClient } from "../../clients/prismaClient"
 import { JWT } from "../../services/jwt"
+import { GraphqlContext } from "../../types"
 
 const queries = {
     async verifyLoginUser(parent :any, { loginCred }: { loginCred: { email: string, password: string } }) {
@@ -15,6 +16,17 @@ const queries = {
         }
         const token = JWT.createToken(user)
         return token
+    },
+    async getCurrentUser (parent :any, args: any, cxt: GraphqlContext) {
+       try {
+            const user = prismaClient.user.findFirst({where:{
+                email: cxt.user.email
+            }})
+            return user
+       } catch (error) {
+            console.log(error)
+            return null
+       }
     },
 }
 

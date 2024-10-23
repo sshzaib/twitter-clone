@@ -1,4 +1,3 @@
-import { gqlClient } from "../../clients/graphqlClient"
 import {graphql} from "../../gql"
 
 export const VerifyLoginUser = graphql(`#graphql
@@ -6,4 +5,15 @@ export const VerifyLoginUser = graphql(`#graphql
     verifyLoginUser(loginCred: $loginCred)
 }
 `)
+
+export const GetCurrentUser = graphql(`#graphql
+    query getCurrentUser {
+  getCurrentUser {
+    firstName
+    lastName
+    email
+    password
+  }
+}`)
+
 

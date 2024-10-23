@@ -21,7 +21,7 @@ export type LoginCred = {
   password: Scalars['String']['input'];
 };
 
-export type User = {
+export type SignupUser = {
   email: Scalars['String']['input'];
   firstName: Scalars['String']['input'];
   lastName?: InputMaybe<Scalars['String']['input']>;
@@ -35,5 +35,11 @@ export type VerifyLoginUserQueryVariables = Exact<{
 
 export type VerifyLoginUserQuery = { __typename?: 'Query', verifyLoginUser?: string | null };
 
+export type GetCurrentUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCurrentUserQuery = { __typename?: 'Query', getCurrentUser?: { __typename?: 'User', firstName: string, lastName?: string | null, email: string, password: string } | null };
+
 
 export const VerifyLoginUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"VerifyLoginUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"loginCred"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"LoginCred"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"verifyLoginUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"loginCred"},"value":{"kind":"Variable","name":{"kind":"Name","value":"loginCred"}}}]}]}}]} as unknown as DocumentNode<VerifyLoginUserQuery, VerifyLoginUserQueryVariables>;
+export const GetCurrentUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCurrentUser"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"password"}}]}}]}}]} as unknown as DocumentNode<GetCurrentUserQuery, GetCurrentUserQueryVariables>;
