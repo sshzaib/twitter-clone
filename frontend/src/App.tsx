@@ -2,9 +2,9 @@ import { Layout } from "./components/Layout"
 import { FeedCard } from "./components/FeedCard"
 import { gqlClient } from "./clients/graphqlClient"
 import { VerifyLoginUser } from "./graphql/query/user"
-import {QueryClient} from "@tanstack/react-query"
+import { QueryClient } from "@tanstack/react-query"
 
-import PostTweet from "./components/PostTweet"
+import { PostTweet } from "./components/PostTweet"
 import { useGetAllTweets } from "./hooks/tweet"
 
 const queryClient = new QueryClient()
