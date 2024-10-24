@@ -14,7 +14,7 @@ export const PostTweet = () => {
     ) => {
         setTweet(e.target.value);
     };
-    
+
     const createTweetMutation = useCreateTweet(tweet)
 
     const handlePostTweet = async () => {
