@@ -1,7 +1,7 @@
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@apollo/server/express4';
 import { User } from './user';
-import { JWT } from '../services/jwt'
+import { JWT } from '../services/jwtService'
 import cors from 'cors';
 import express from 'express';
 import { GraphqlContext } from '../types';

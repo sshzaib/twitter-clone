@@ -1,27 +1,21 @@
 import { User } from "@prisma/client"
-import { prismaClient } from "../../clients/prismaClient"
-import { JWT } from "../../services/jwt"
+import { JWT } from "../../services/jwtService"
 import { GraphqlContext } from "../../types"
+import { UserService } from "../../services/userService"
+import { TweetService } from "../../services/tweetService"
 
 const queries = {
     async LoginUser(parent :any, { loginCred }: { loginCred: { email: string, password: string } }) {
-        const user = await prismaClient.user.findFirst({
-            where: {
-                email: loginCred.email,
-                password: loginCred.password
-            }
-        })
+        const user = await UserService.loginUser(loginCred)
         if (!user) {
             throw new Error("incorrect email or password")
         }
         const token = JWT.createToken(user)
         return token
     },
-    async getCurrentUser (parent :any, args: any, cxt: GraphqlContext) {
+    async getCurrentUser (parent :any, args: any, ctx: GraphqlContext) {
        try {
-            const user = prismaClient.user.findFirst({where:{
-                email: cxt.user.email
-            }})
+            const user = await UserService.findUserWithEmail(ctx.user.email)
             return user
        } catch (error) {
             console.log(error)
@@ -30,11 +24,7 @@ const queries = {
     },
     async getUserById (parent: any, {id}: {id: string}, ctx: GraphqlContext) {
         try {
-            const user = await prismaClient.user.findFirst({
-                where: {
-                    id
-                }
-            })
+            const user = await UserService.findUserWithId(ctx.user.id)
             if (!user) {
                 return null
             }
@@ -48,38 +38,15 @@ const queries = {
 
 const mutations = {
     async SignupUser(parent: any, {user}: {user: User}) {
-        const prevUser = await prismaClient.user.findFirst({
-            where: {
-                email: user.email,
-            }
-        })
-        if (prevUser) {
-            throw new Error("user with email already exist")
-        }
-        const newUser = await prismaClient.user.create({
-            data: {
-                email: user.email,
-                password: user.password,
-                firstName: user.firstName,
-                lastName: user.lastName
-            }
-        })
-        
-        const token = JWT.createToken(newUser)
+        const token = UserService.createUser(user)
         return token
     }
 }
 
 const extraResolvers = {
     User: {
-        async tweets(parent: any, args: any, cxt: GraphqlContext) {
-            console.log(parent)
-            const tweets = await prismaClient.tweet.findMany({
-                where: {
-                    authorId: parent.id
-                }
-            })
-            console.log(tweets)
+        async tweets({id}: {id: string}, args: any, cxt: GraphqlContext) {
+            const tweets = await TweetService.getAllUserTweets(id)
             return tweets
         }
     }

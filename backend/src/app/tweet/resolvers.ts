@@ -1,6 +1,6 @@
-import { prismaClient } from "../../clients/prismaClient";
+import { TweetService } from "../../services/tweetService";
+import { UserService } from "../../services/userService";
 import { CreateTweet, GraphqlContext } from "../../types";
-import { User } from "../user";
 
 const queries = {
     async getAllTweets(parent: any, args: any, ctx: GraphqlContext) {
@@ -8,7 +8,7 @@ const queries = {
             if (!ctx.user) {
                 throw new Error("User is not authorized")
             }
-            const tweets = await prismaClient.tweet.findMany()
+            const tweets = await TweetService.getAllTweets()
             return tweets
         } catch (error) {
             console.log(error)
@@ -22,12 +22,7 @@ const mutations = {
             if (!ctx.user) {
                 throw new Error("User is not authorized")
             }
-            
-            const tweet = await prismaClient.tweet.create({
-                data: {
-                    content: args.data.content,
-                    author: {connect: {id: ctx.user.id}}
-                }})
+            const tweet = await TweetService.createTweet(args.data.content, ctx.user.id)
             return tweet      
             
         } catch (error) {
@@ -39,11 +34,7 @@ const mutations = {
 const extraResolvers = {
     Tweet: {
         async author(parent: any, args: any, cxt: GraphqlContext) {
-            const user = await prismaClient.user.findFirst({
-                where: {
-                    id: parent.autherId
-                }
-            })
+            const user = await UserService.findUserWithId(parent.autherId)
             return user
         }
     }
