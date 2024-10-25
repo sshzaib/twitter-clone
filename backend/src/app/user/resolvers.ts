@@ -35,6 +35,9 @@ const queries = {
                     id
                 }
             })
+            if (!user) {
+                return null
+            }
             return user
         } catch (error) {
             console.log(error)

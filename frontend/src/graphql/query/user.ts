@@ -1,4 +1,3 @@
-import { gqlClient } from "../../clients/graphqlClient"
 import {graphql} from "../../gql"
 
 export const LoginUser = graphql(`#graphql
@@ -17,7 +16,24 @@ export const GetCurrentUser = graphql(`#graphql
   }
 }`)
 
-const eoginUser = await gqlClient.request(LoginUser, {loginCred: {email: "passive@gmail.com", password: "123"}})
+export const GetUserById = graphql(`#graphql
+  query getUserById($id: ID) {
+    getUserById(Id: $id) {
+      id
+      firstName
+      lastName
+      tweets {
+        id
+        content
+        author {
+          id
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+`)
 
 
 

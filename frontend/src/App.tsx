@@ -4,6 +4,7 @@ import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Auth } from "./pages/Auth";
 import { Signin } from "./pages/Signin";
+import { UserProfile } from "./UserProfile";
 
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
 
           {/* Routes with layout  */}
           <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
+            <Route path = "/" element={<Home />} />
+            <Route path = "/:userId" element = {<UserProfile />} />
           </Route>
 
 
