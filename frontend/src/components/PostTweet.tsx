@@ -2,9 +2,7 @@ import { useState } from "react";
 import { FaGlobeAsia } from "react-icons/fa";
 import { FaRegCircleUser, FaRegImage } from "react-icons/fa6";
 import { useCreateTweet } from "../hooks/tweet";
-import { useMutation } from "@tanstack/react-query";
-import { gqlClient } from "../clients/graphqlClient";
-import { CreateTweet } from "../graphql/mutation/tweet";
+
 
 
 export const PostTweet = () => {

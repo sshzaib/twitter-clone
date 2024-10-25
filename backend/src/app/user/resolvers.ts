@@ -4,7 +4,7 @@ import { JWT } from "../../services/jwt"
 import { GraphqlContext } from "../../types"
 
 const queries = {
-    async verifyLoginUser(parent :any, { loginCred }: { loginCred: { email: string, password: string } }) {
+    async LoginUser(parent :any, { loginCred }: { loginCred: { email: string, password: string } }) {
         const user = await prismaClient.user.findFirst({
             where: {
                 email: loginCred.email,

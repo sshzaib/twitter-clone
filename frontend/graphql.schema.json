@@ -179,6 +179,31 @@
         "isOneOf": null,
         "fields": [
           {
+            "name": "LoginUser",
+            "description": null,
+            "args": [
+              {
+                "name": "loginCred",
+                "description": null,
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "LoginCred",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "getAllTweets",
             "description": null,
             "args": [],
@@ -201,31 +226,6 @@
             "type": {
               "kind": "OBJECT",
               "name": "User",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "verifyLoginUser",
-            "description": null,
-            "args": [
-              {
-                "name": "loginCred",
-                "description": null,
-                "type": {
-                  "kind": "INPUT_OBJECT",
-                  "name": "LoginCred",
-                  "ofType": null
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,

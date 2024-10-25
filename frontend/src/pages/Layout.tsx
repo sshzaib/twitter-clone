@@ -1,10 +1,12 @@
+import { Outlet, useNavigate } from "react-router-dom";
+
 import { BsPerson } from "react-icons/bs";
 import { FaXTwitter } from "react-icons/fa6";
 import { GoHomeFill } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FaRegEnvelope } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiCircleMore } from "react-icons/ci";
 import { BsThreeDots } from "react-icons/bs";
 import { useGetCurrentUser } from "../hooks/user";
@@ -44,19 +46,23 @@ const navbarList = [
     navigate: "",
   },
 ];
- const Layout: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const Layout: React.FC = () => {
   const {data, isLoading} = useGetCurrentUser()
+  const navigate = useNavigate();
+  console.log(data)
+    if (!isLoading && !data) {
+      console.log("1")
+      navigate("/auth");
+    }
+
   if (isLoading) {
       return <>
         <div className="flex items-center justify-center h-screen">
           <FaXTwitter className="text-6xl" />
         </div>
       </>
-    
   }
-  if (data) {
+   if (data) {
     return (
       <div className="grid grid-cols-12 h-screen w-screen">
         <div className="col-span-3 h-screen sticky top-0 flex justify-end pr-10">
@@ -64,7 +70,7 @@ const navbarList = [
         </div>
         <div className="col-span-9 h-screen overflow-y-auto">
           <div className="grid grid-cols-12 h-full">
-            <div className="col-span-6 border-x border-slate-600">{children}</div>
+            <div className="col-span-6 border-x border-slate-600"><Outlet /></div>
             <div className="col-span-6">
               <PeopleRecommendation />
             </div>
@@ -72,8 +78,9 @@ const navbarList = [
         </div>
       </div>
     );
-  } 
-   
+  } else {
+    console.log(data)
+  }
 };
 
 
@@ -139,3 +146,5 @@ function PeopleRecommendation() {
     </div>
   );
 }
+
+

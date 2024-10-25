@@ -16,7 +16,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "#graphql\n    mutation CreateTweet($data: CreateTweetData!) {\n        CreateTweet(data: $data) {\n            id\n            content\n        }\n    }\n": types.CreateTweetDocument,
     "#graphql\n    query GetAllTweets {\n        getAllTweets {\n            id\n            content\n            author {\n            firstName\n            lastName\n            id\n            }\n        }\n    }\n\n": types.GetAllTweetsDocument,
-    "#graphql\n    query VerifyLoginUser($loginCred: LoginCred) {\n    verifyLoginUser(loginCred: $loginCred)\n}\n": types.VerifyLoginUserDocument,
+    "#graphql\n    query loginUser($loginCred: LoginCred) {\n    LoginUser(loginCred: $loginCred)\n}\n": types.LoginUserDocument,
     "#graphql\n    query getCurrentUser {\n  getCurrentUser {\n    firstName\n    lastName\n    email\n    password\n  }\n}": types.GetCurrentUserDocument,
 };
 
@@ -45,7 +45,7 @@ export function graphql(source: "#graphql\n    query GetAllTweets {\n        get
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "#graphql\n    query VerifyLoginUser($loginCred: LoginCred) {\n    verifyLoginUser(loginCred: $loginCred)\n}\n"): (typeof documents)["#graphql\n    query VerifyLoginUser($loginCred: LoginCred) {\n    verifyLoginUser(loginCred: $loginCred)\n}\n"];
+export function graphql(source: "#graphql\n    query loginUser($loginCred: LoginCred) {\n    LoginUser(loginCred: $loginCred)\n}\n"): (typeof documents)["#graphql\n    query loginUser($loginCred: LoginCred) {\n    LoginUser(loginCred: $loginCred)\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -16,7 +16,6 @@ export interface FeedCardProps {
   }
 }
 export const FeedCard:FC<FeedCardProps> = ({tweet}) => {
-  console.log(tweet, "aa")
   return (
     <div className="grid grid-cols-12 mt-2 px-4 border-b border-slate-900 ">
       <div className="col-span-1 ">

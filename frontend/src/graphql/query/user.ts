@@ -1,8 +1,9 @@
+import { gqlClient } from "../../clients/graphqlClient"
 import {graphql} from "../../gql"
 
-export const VerifyLoginUser = graphql(`#graphql
-    query VerifyLoginUser($loginCred: LoginCred) {
-    verifyLoginUser(loginCred: $loginCred)
+export const LoginUser = graphql(`#graphql
+    query loginUser($loginCred: LoginCred) {
+    LoginUser(loginCred: $loginCred)
 }
 `)
 
@@ -15,5 +16,8 @@ export const GetCurrentUser = graphql(`#graphql
     password
   }
 }`)
+
+const eoginUser = await gqlClient.request(LoginUser, {loginCred: {email: "passive@gmail.com", password: "123"}})
+
 
 
