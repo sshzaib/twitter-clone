@@ -33,9 +33,6 @@ export const UserProfile = () => {
           {"  "}
           {data?.getUserById?.lastName}
         </div>
-        {/* <div className="text-sm text-[#696e72]">
-          @{user.getUserByUsername?.username}
-        </div> */}
       </div>
       {data?.getUserById?.tweets && (
         <div>

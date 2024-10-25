@@ -6,7 +6,7 @@ import { GoHomeFill } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FaRegEnvelope } from "react-icons/fa";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { CiCircleMore } from "react-icons/ci";
 import { BsThreeDots } from "react-icons/bs";
 import { useGetCurrentUser } from "../hooks/user";
@@ -14,38 +14,6 @@ import { SignupUser } from "../gql/graphql";
 import { FaRegCircleUser } from "react-icons/fa6";
 
 
-const navbarList = [
-  {
-    title: "Home",
-    icon: <GoHomeFill />,
-    navigate: "/",
-  },
-  {
-    title: "Explore",
-    icon: <IoSearch />,
-    navigate: "",
-  },
-  {
-    title: "Notifications",
-    icon: <IoNotificationsOutline />,
-    navigate: "",
-  },
-  {
-    title: "Messages",
-    icon: <FaRegEnvelope />,
-    navigate: "",
-  },
-  {
-    title: "Profile",
-    icon: <BsPerson />,
-    navigate: "",
-  },
-  {
-    title: "More",
-    icon: <CiCircleMore />,
-    navigate: "",
-  },
-];
 export const Layout: React.FC = () => {
   const {data, isLoading} = useGetCurrentUser()
   const navigate = useNavigate();
@@ -84,8 +52,49 @@ export const Layout: React.FC = () => {
 };
 
 
+interface User {
+  id: string;
+  firstName: string;
+  lastName?: string | null;
+  email: string;
+  password: string;
+}
+const Sidebar: React.FC<{user: User}> = ({user}) => {
+  const navigate = useNavigate()
 
-const Sidebar: React.FC<{user: SignupUser}> = ({user}) => {
+  const navbarList = [
+    {
+      title: "Home",
+      icon: <GoHomeFill />,
+      navigate: "/",
+    },
+    {
+      title: "Explore",
+      icon: <IoSearch />,
+      navigate: "/",
+    },
+    {
+      title: "Notifications",
+      icon: <IoNotificationsOutline />,
+      navigate: "/",
+    },
+    {
+      title: "Messages",
+      icon: <FaRegEnvelope />,
+      navigate: "/",
+    },
+    {
+      title: "Profile",
+      icon: <BsPerson />,
+      navigate: `/${user.id}`,
+    },
+    {
+      title: "More",
+      icon: <CiCircleMore />,
+      navigate: "/",
+    },
+  ];
+  
   return (
     <div>
       <div className="cursor-pointer hover:bg-slate-900 w-fit rounded-full p-3 transition-all">
@@ -99,6 +108,7 @@ const Sidebar: React.FC<{user: SignupUser}> = ({user}) => {
           >
             <button
               className="flex gap-2"
+              onClick={()=> navigate(item.navigate)}
             >
               <span className="text-3xl">{item.icon}</span>
               <span>{item.title}</span>
