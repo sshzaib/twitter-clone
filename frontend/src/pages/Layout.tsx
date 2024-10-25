@@ -6,21 +6,22 @@ import { GoHomeFill } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FaRegEnvelope } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiCircleMore } from "react-icons/ci";
 import { BsThreeDots } from "react-icons/bs";
 import { useGetCurrentUser } from "../hooks/user";
 import { FaRegCircleUser } from "react-icons/fa6";
+import { BiLogOut } from "react-icons/bi";
 
 
 export const Layout: React.FC = () => {
   const {data, isLoading} = useGetCurrentUser()
   const navigate = useNavigate();
-  console.log(data)
+
     if (!isLoading && !data) {
-      console.log("1")
       navigate("/auth");
-    }
+  }
+  
 
   if (isLoading) {
       return <>
@@ -45,9 +46,7 @@ export const Layout: React.FC = () => {
         </div>
       </div>
     );
-  } else {
-    console.log(data)
-  }
+  } 
 };
 
 
@@ -86,13 +85,13 @@ const Sidebar: React.FC<{user: User}> = ({user}) => {
       title: "Profile",
       icon: <BsPerson />,
       navigate: `/${user.id}`,
-    },
-    {
-      title: "More",
-      icon: <CiCircleMore />,
-      navigate: "/",
-    },
+    }
   ];
+
+  const handleLogout = () => {
+    localStorage.removeItem("__twitter_token")
+    window.location.reload();
+  }
   
   return (
     <div>
@@ -114,6 +113,17 @@ const Sidebar: React.FC<{user: User}> = ({user}) => {
             </button>
           </li>
         ))}
+        <li
+            className="cursor-pointer flex items-center gap-4 text-xl justify-center hover:bg-slate-900 w-fit rounded-full transition-all p-3 pr-5 "
+          >
+            <button
+              className="flex gap-2"
+              onClick={handleLogout}
+            >
+              <span className="text-3xl"><BiLogOut /></span>
+              <span>Logout</span>
+            </button>
+          </li>
       </ul>
       <div className="mt-4 ">
         <button className="bg-[#1d9bf0] rounded-full w-full py-3.5 font-bold">
