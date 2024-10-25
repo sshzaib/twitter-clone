@@ -3,6 +3,7 @@ import { BiRepost } from "react-icons/bi";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FC } from 'react';
+import { Link } from "react-router-dom";
 
 export interface FeedCardProps {
   tweet: {
@@ -24,9 +25,9 @@ export const FeedCard:FC<FeedCardProps> = ({tweet}) => {
       </div>
       <div className="col-span-11 ml-2 cursor-pointer ">
         <div className="flex items-center gap-2">
-          <div className="hover:underline font-semibold w-fit">
+          <Link to={`/${tweet.author.id}`} className="hover:underline font-semibold w-fit">
             {tweet.author?.firstName} {tweet.author?.lastName}
-          </div>
+          </Link>
         </div>
         <div> {tweet.content}</div>
         <div className="flex justify-between pr-20">

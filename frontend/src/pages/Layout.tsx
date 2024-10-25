@@ -10,7 +10,6 @@ import React, { useState } from "react";
 import { CiCircleMore } from "react-icons/ci";
 import { BsThreeDots } from "react-icons/bs";
 import { useGetCurrentUser } from "../hooks/user";
-import { SignupUser } from "../gql/graphql";
 import { FaRegCircleUser } from "react-icons/fa6";
 
 
