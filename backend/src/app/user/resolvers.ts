@@ -28,6 +28,19 @@ const queries = {
             return null
        }
     },
+    async getUserById (parent: any, {id}: {id: string}, ctx: GraphqlContext) {
+        try {
+            const user = await prismaClient.user.findFirst({
+                where: {
+                    id
+                }
+            })
+            return user
+        } catch (error) {
+            console.log(error)
+            return null
+        }
+    }
 }
 
 const mutations = {
