@@ -35,11 +35,11 @@ model Tweet {
 }
 
 model Follow {
-  id String @id @default(uuid())
-
   follower   User   @relation(name: "followuser", fields: [followerId], references: [id])
   followerId String
 
   following   User   @relation(name: "followinguser", fields: [followingId], references: [id])
   followingId String
+
+  @@id([followerId, followingId])
 }

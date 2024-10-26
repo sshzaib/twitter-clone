@@ -93,7 +93,25 @@ export class UserService {
             })
             return followings.map((follower)=> follower.following)
         } catch (error) {
+            console.log(error)
             return null
+        }
+    }
+
+    public static async unfollowUser(followerId: string, followingId: string) {
+        try {
+            await prismaClient.follow.delete({
+                where: {
+                    followerId_followingId: {
+                        followerId,
+                        followingId
+                    }
+                }
+            })
+            return true
+        } catch (error) {
+            console.log(error)
+            return false
         }
     }
 }

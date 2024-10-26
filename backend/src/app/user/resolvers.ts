@@ -48,7 +48,14 @@ const mutations = {
         const result = await UserService.followUser(ctx.user.id,followingId)
         return result
         
-    }
+    },
+    async UnFollowUser(_: any, {followingId}: {followingId: string}, ctx: GraphqlContext) {
+        if (!ctx.user || !ctx.user.id) {
+            throw new Error("Unauthorized")
+        }
+        const result = await UserService.unfollowUser(ctx.user.id, followingId)
+        return result
+    } 
 }
 
 const extraResolvers = {
