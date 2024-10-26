@@ -6,7 +6,6 @@ export const LoginUser = graphql(`#graphql
 }
 `)
 
-
 export const GetCurrentUser = graphql(`#graphql
     query getCurrentUser {
   getCurrentUser {

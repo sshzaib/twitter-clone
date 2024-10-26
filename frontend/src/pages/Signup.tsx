@@ -5,6 +5,7 @@ import { LoginUser } from "../graphql/query/user";
 import { QueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SignupUser } from "../graphql/mutation/user";
 
 export const Signup = () => {
     const queryClient = new QueryClient()
@@ -13,11 +14,11 @@ export const Signup = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
-    
+
     const handleSignup = async () => {
-      const user = await gqlClient.request(LoginUser, {loginCred: {email, password}})
-      if (user.LoginUser) {
-        localStorage.setItem("__twitter_token", user.LoginUser)
+      const user = await gqlClient.request(SignupUser, {user: {email, password, firstName, lastName}})
+      if (user.SignupUser) {
+        localStorage.setItem("__twitter_token", user.SignupUser)
         queryClient.invalidateQueries({ queryKey: ['currentUser'] })
         navigate("/")
       }

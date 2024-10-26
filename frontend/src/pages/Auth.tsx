@@ -14,7 +14,9 @@ export const Auth = () => {
           <div className="w-80">
             <div className="text-2xl font-bold mt-16">Join today.</div>
             <div className="mt-2">
-              <button className="bg-[#1d9bf0] rounded-full w-full p-3">
+              <button 
+                className="bg-[#1d9bf0] rounded-full w-full p-3"
+                onClick={()=> navigate("/i/flow/signup")}>
                 Create account
               </button>
             </div>
