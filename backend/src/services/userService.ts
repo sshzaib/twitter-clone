@@ -50,4 +50,15 @@ export class UserService {
         const token = JWT.createToken(newUser)
         return token
     }
+
+    public static async followUser(followerId: string, followingId: string){
+        const result = await prismaClient.follow.create({
+            data: {
+                followerId,
+                followingId
+            }
+        })
+        console.log(result)
+        return []
+    }
 }

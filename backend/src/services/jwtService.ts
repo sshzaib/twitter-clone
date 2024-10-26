@@ -8,14 +8,15 @@ export class JWT {
             id: user.id,
             email: user.email
         }
-        return jwt.sign(payload, process.env.JWT_SECRET)
+        return jwt.sign(payload, "JWTS3CR3T")
     }
      public static async decodeJwtToken(token: string) {
+        console.log(process.env).
         try {
             if (token == null) {
                 throw new Error ("User not authenticated")
             }
-            const payload = jwt.verify(token, process.env.JWT_SECRET)
+            const payload = jwt.verify(token, "JWTS3CR3T")
             return payload
         } catch (error) {
             console.log(error)

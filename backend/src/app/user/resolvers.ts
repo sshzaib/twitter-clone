@@ -40,6 +40,9 @@ const mutations = {
     async SignupUser(parent: any, {user}: {user: User}) {
         const token = UserService.createUser(user)
         return token
+    },
+    async FollowUser(parent: any, {followingId}: {followingId: string}, ctx: GraphqlContext) {
+        await UserService.followUser(ctx.user.id,followingId)
     }
 }
 
@@ -51,6 +54,5 @@ const extraResolvers = {
         }
     }
 }
-
 
 export const resolvers = {queries, mutations, extraResolvers}
