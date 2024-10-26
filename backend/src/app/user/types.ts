@@ -18,6 +18,9 @@ export const types = `#graphql
         email: String!
         password: String!
         
+        followers: [User]
+        followings: [User]
+
         tweets: [Tweet]
     }
 `;

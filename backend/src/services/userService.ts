@@ -52,13 +52,48 @@ export class UserService {
     }
 
     public static async followUser(followerId: string, followingId: string){
-        const result = await prismaClient.follow.create({
-            data: {
-                followerId,
-                followingId
-            }
-        })
-        console.log(result)
-        return []
+        try {
+            const result = await prismaClient.follow.create({
+                data: {
+                    followerId,
+                    followingId
+                }
+            })
+            return result ? true : false
+        } catch (error) {
+            throw new Error("User not found")
+        }
+    }
+
+    public static async getFollowers(userId: string) {
+        try {
+            const followers = await prismaClient.follow.findMany({
+                where: {
+                    followingId: userId
+                },
+                include: {
+                    follower: true
+                }
+            })
+            return followers.map((follower)=> follower.follower)
+        } catch (error) {
+            return null
+        }
+    }
+
+    public static async getFollowings(userId: string) {
+        try {
+            const followings = await prismaClient.follow.findMany({
+                where: {
+                    followerId: userId
+                },
+                include: {
+                    following: true
+                }
+            })
+            return followings.map((follower)=> follower.following)
+        } catch (error) {
+            return null
+        }
     }
 }

@@ -11,7 +11,6 @@ export class JWT {
         return jwt.sign(payload, "JWTS3CR3T")
     }
      public static async decodeJwtToken(token: string) {
-        console.log(process.env).
         try {
             if (token == null) {
                 throw new Error ("User not authenticated")

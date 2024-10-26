@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
+  id        String  @id @default(uuid())
   firstName String
-  lastName String?
-  email String @unique
-  password String
+  lastName  String?
+  email     String  @unique
+  password  String
 
-  followers Follow[] @relation("followuser")
+  followers  Follow[] @relation("followuser")
   followings Follow[] @relation("followinguser")
 
   tweets Tweet[]
@@ -24,10 +24,10 @@ model User {
 }
 
 model Tweet {
-  id String @id @default(uuid())
+  id      String @id @default(uuid())
   content String
 
-  author User @relation(fields: [authorId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
   createdAt DateTime @default(now())
@@ -37,9 +37,9 @@ model Tweet {
 model Follow {
   id String @id @default(uuid())
 
-  follower User @relation(name: "followuser", fields: [followerId], references: [id])
+  follower   User   @relation(name: "followuser", fields: [followerId], references: [id])
   followerId String
 
-  following User @relation(name: "followinguser",fields: [followingId], references: [id])
+  following   User   @relation(name: "followinguser", fields: [followingId], references: [id])
   followingId String
 }

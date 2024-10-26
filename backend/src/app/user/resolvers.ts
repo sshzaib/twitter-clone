@@ -42,15 +42,34 @@ const mutations = {
         return token
     },
     async FollowUser(parent: any, {followingId}: {followingId: string}, ctx: GraphqlContext) {
-        await UserService.followUser(ctx.user.id,followingId)
+        if (!ctx.user || !ctx.user.id) {
+            throw new Error("Unauthorized")
+        }
+        const result = await UserService.followUser(ctx.user.id,followingId)
+        return result
+        
     }
 }
 
 const extraResolvers = {
     User: {
-        async tweets(parent: User, args: any, cxt: GraphqlContext) {
+        async tweets(parent: User, args: any, ctx: GraphqlContext) {
             const tweets = await TweetService.getAllUserTweets(parent.id)
             return tweets
+        },
+        async followers(parent: User, args: any, ctx: GraphqlContext) {
+            if (!ctx.user || !ctx.user.id) {
+                throw new Error("unauthorized")
+            }
+            const followers = await UserService.getFollowers(ctx.user.id)
+            return followers
+        },
+        async followings(parent: User, args: any, ctx: GraphqlContext) {
+            if (!ctx.user || !ctx.user.id) {
+                throw new Error("unauthorized")
+            }
+            const followings = await UserService.getFollowings(ctx.user.id)
+            return followings
         }
     }
 }
