@@ -45,8 +45,8 @@ const mutations = {
 
 const extraResolvers = {
     User: {
-        async tweets({id}: {id: string}, args: any, cxt: GraphqlContext) {
-            const tweets = await TweetService.getAllUserTweets(id)
+        async tweets(parent: User, args: any, cxt: GraphqlContext) {
+            const tweets = await TweetService.getAllUserTweets(parent.id)
             return tweets
         }
     }

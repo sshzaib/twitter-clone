@@ -1,3 +1,4 @@
+import { Tweet } from "@prisma/client";
 import { TweetService } from "../../services/tweetService";
 import { UserService } from "../../services/userService";
 import { CreateTweet, GraphqlContext } from "../../types";
@@ -33,8 +34,8 @@ const mutations = {
 
 const extraResolvers = {
     Tweet: {
-        async author(parent: any, args: any, cxt: GraphqlContext) {
-            const user = await UserService.findUserWithId(parent.autherId)
+        async author(parent: Tweet, args: any, cxt: GraphqlContext) {
+            const user = await UserService.findUserWithId(parent.authorId)
             return user
         }
     }
