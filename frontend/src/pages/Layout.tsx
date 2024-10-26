@@ -6,8 +6,7 @@ import { GoHomeFill } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FaRegEnvelope } from "react-icons/fa";
-import React, { useEffect, useState } from "react";
-import { CiCircleMore } from "react-icons/ci";
+import React, { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { useGetCurrentUser } from "../hooks/user";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -15,11 +14,14 @@ import { BiLogOut } from "react-icons/bi";
 
 
 export const Layout: React.FC = () => {
+  console.log("top")
   const {data, isLoading} = useGetCurrentUser()
   const navigate = useNavigate();
-
-    if (!isLoading && !data) {
-      navigate("/auth");
+  console.log("after hook")
+  console.log("isLoading", isLoading)
+  console.log("data", data)
+  if (!isLoading && !data) {
+    navigate("/auth");
   }
   
 
@@ -30,10 +32,11 @@ export const Layout: React.FC = () => {
         </div>
       </>
   }
-   if (data) {
+   if (!isLoading && data) {
     return (
       <div className="grid grid-cols-12 h-screen w-screen">
         <div className="col-span-3 h-screen sticky top-0 flex justify-end pr-10">
+           {/* @ts-ignore */}
         <Sidebar user = {data}/>
         </div>
         <div className="col-span-9 h-screen overflow-y-auto">

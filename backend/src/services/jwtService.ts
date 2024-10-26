@@ -12,6 +12,9 @@ export class JWT {
     }
      public static async decodeJwtToken(token: string) {
         try {
+            if (token == null) {
+                throw new Error ("User not authenticated")
+            }
             const payload = jwt.verify(token, process.env.JWT_SECRET)
             return payload
         } catch (error) {

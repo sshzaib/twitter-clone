@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import { Auth } from "./pages/Auth";
 import { Signin } from "./pages/Signin";
 import { UserProfile } from "./UserProfile";
+import { Signup } from "./pages/Signup";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           {/* Routes without Layout */}
           <Route path = "/auth" element={<Auth />} />
           <Route path= "/i/flow/signin" element = {<Signin />} />
+          <Route path= "/i/flow/signup" element = {<Signup />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
     </BrowserRouter>

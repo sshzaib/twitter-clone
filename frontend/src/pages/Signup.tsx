@@ -6,12 +6,15 @@ import { QueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const Signin = () => {
+export const Signup = () => {
     const queryClient = new QueryClient()
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
-    const handleSignin = async () => {
+    
+    const handleSignup = async () => {
       const user = await gqlClient.request(LoginUser, {loginCred: {email, password}})
       if (user.LoginUser) {
         localStorage.setItem("__twitter_token", user.LoginUser)
@@ -29,7 +32,23 @@ export const Signin = () => {
               <FaXTwitter className="text-3xl" />
             </div>
             <div className="mt-8 text-3xl font-semibold">
-              Sign in to X
+              Sign up to X
+            </div>
+            <div className="mt-8">
+              <input
+                className="block w-80 pt-3 pb-3 bg-transparent ps-2 text-md text-white border border-[#6D7277] rounded-lg"
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e)=> setFirstName(e.target.value)}
+              />
+            </div>
+            <div className="mt-8">
+              <input
+                className="block w-80 pt-3 pb-3 bg-transparent ps-2 text-md text-white border border-[#6D7277] rounded-lg"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e)=> setLastName(e.target.value)}
+              />
             </div>
             <div className="mt-8">
               <input
@@ -48,8 +67,8 @@ export const Signin = () => {
               />
             </div>
             <div className="mt-10 w-full ">
-              <button className="border w-full rounded-full p-4 border-slate-600 hover:bg-[#181919]" onClick={handleSignin}>
-                Signin
+              <button className="border w-full rounded-full p-4 border-slate-600 hover:bg-[#181919]" onClick={handleSignup}>
+                Signup
               </button>
             </div>
           </div>

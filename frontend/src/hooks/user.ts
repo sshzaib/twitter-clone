@@ -5,7 +5,10 @@ import { GetCurrentUser, GetUserById } from '../graphql/query/user'
 export const useGetCurrentUser = () => {
    const {data, isLoading} =  useQuery({
         queryKey: ['currentUser'],
-        queryFn: () => gqlClient.request(GetCurrentUser),
+        queryFn: () => {
+            console.log("request")
+            return gqlClient.request(GetCurrentUser)
+        },
     })
     return {data: data?.getCurrentUser, isLoading}
 }
