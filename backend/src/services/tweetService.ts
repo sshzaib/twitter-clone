@@ -11,7 +11,7 @@ export class TweetService {
     }
 
     public static async getAllTweets () {
-        const tweets = await prismaClient.tweet.findMany()
+        const tweets = await prismaClient.tweet.findMany({orderBy: {createdAt: "desc"}})
         return tweets
     }
 
