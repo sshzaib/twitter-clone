@@ -6,24 +6,18 @@ import { GoHomeFill } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FaRegEnvelope } from "react-icons/fa";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { useGetCurrentUser } from "../hooks/user";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
 
-
 export const Layout: React.FC = () => {
-  console.log("top")
-  const {data, isLoading} = useGetCurrentUser()
+  const {data, isLoading } = useGetCurrentUser()
   const navigate = useNavigate();
-  console.log("after hook")
-  console.log("isLoading", isLoading)
-  console.log("data", data)
   if (!isLoading && !data) {
     navigate("/auth");
   }
-  
 
   if (isLoading) {
       return <>

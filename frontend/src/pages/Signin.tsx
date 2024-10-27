@@ -14,8 +14,8 @@ export const Signin = () => {
     const handleSignin = async () => {
       const user = await gqlClient.request(LoginUser, {loginCred: {email, password}})
       if (user.LoginUser) {
-        localStorage.setItem("__twitter_token", user.LoginUser)
-        queryClient.invalidateQueries({ queryKey: ['currentUser'] })
+        localStorage.setItem("__twitter_token", `Bearer ${user.LoginUser}`)
+        gqlClient.setHeader("Authorization", localStorage.getItem("__twitter_token") as string)
         navigate("/")
       }
     }
