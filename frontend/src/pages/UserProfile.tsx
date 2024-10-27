@@ -1,9 +1,13 @@
 import { FaArrowLeft, FaRegCircleUser } from "react-icons/fa6"
-import { useGetUserById } from "./hooks/user"
-import { FeedCard } from "./components/FeedCard"
+import { useGetUserById } from "../hooks/user"
+import { FeedCard } from "../components/FeedCard"
+import { useParams } from "react-router-dom";
 
 export const UserProfile = () => {
-    const {data} = useGetUserById("9b14050b-8cd2-4c5d-99fb-72cf33d5e93b")
+    const { userId } = useParams();
+    const {data} = useGetUserById(userId as string)
+    console.log(userId)
+    console.log(data)
     return (
         <>
       <div className="grid grid-cols-12 cursor-pointer">

@@ -18,8 +18,8 @@ export const GetCurrentUser = graphql(`#graphql
 }`)
 
 export const GetUserById = graphql(`#graphql
-  query getUserById($id: ID) {
-    getUserById(Id: $id) {
+  query getUserById($userId: ID) {
+    getUserById(userId: $userId) {
       id
       firstName
       lastName
@@ -36,5 +36,15 @@ export const GetUserById = graphql(`#graphql
   }
 `)
 
+export const GetRecommendedPeople = graphql(`#graphql
+  query getRecommendedPeople($userId: String!) {
+    getRecommendedPeople(userId: $userId) {
+      id
+      firstName
+      lastName
+      email
+    }
+  } 
+  `)
 
 

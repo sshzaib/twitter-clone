@@ -5,3 +5,9 @@ export const SignupUser = graphql(`#graphql
     SignupUser(user: $user)
   }
   `)
+
+export const FollowUser = graphql(`#graphql
+  mutation followUser($followingId: String) {
+  FollowUser(followingId: $followingId)
+}
+`)

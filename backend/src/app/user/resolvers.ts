@@ -22,9 +22,10 @@ const queries = {
             return null
        }
     },
-    async getUserById (parent: any, {id}: {id: string}, ctx: GraphqlContext) {
+    async getUserById (parent: any, {userId}: {userId: string}, ctx: GraphqlContext) {
         try {
-            const user = await UserService.findUserWithId(ctx.user.id)
+            console.log(userId)
+            const user = await UserService.findUserWithId(userId)
             if (!user) {
                 return null
             }

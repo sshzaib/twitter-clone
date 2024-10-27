@@ -4,7 +4,7 @@ import { Layout } from "./pages/Layout";
 import { Home } from "./pages/Home";
 import { Auth } from "./pages/Auth";
 import { Signin } from "./pages/Signin";
-import { UserProfile } from "./UserProfile";
+import { UserProfile } from "./pages/UserProfile";
 import { Signup } from "./pages/Signup";
 
 

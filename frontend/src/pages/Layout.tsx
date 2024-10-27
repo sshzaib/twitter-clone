@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 import { BsPerson } from "react-icons/bs";
 import { FaXTwitter } from "react-icons/fa6";
@@ -8,9 +8,13 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { FaRegEnvelope } from "react-icons/fa";
 import React, { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
-import { useGetCurrentUser } from "../hooks/user";
+import { useGetCurrentUser, useGetRecommendedPeople } from "../hooks/user";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
+import { gqlClient } from "../clients/graphqlClient";
+import { GetRecommendedPeople } from "../graphql/query/user";
+import { FollowUser } from "../graphql/mutation/user";
+import { queryClient } from "../main";
 
 export const Layout: React.FC = () => {
   const {data, isLoading } = useGetCurrentUser()
@@ -36,7 +40,7 @@ export const Layout: React.FC = () => {
           <div className="grid grid-cols-12 h-full">
             <div className="col-span-6 border-x border-slate-600"><Outlet /></div>
             <div className="col-span-6">
-              <PeopleRecommendation />
+              <PeopleRecommendation user = {data} />
             </div>
           </div>
         </div>
@@ -143,23 +147,43 @@ const Sidebar: React.FC<{user: User}> = ({user}) => {
   );
 };
 
-function PeopleRecommendation() {
-  const [search, setSearch] = useState("");
-  
+
+const PeopleRecommendation: React.FC<{user: User}> = ({user}) => {
+  const {data} = useGetRecommendedPeople(user.id)
   return (
-    <div className="ml-8 flex flex-col w-[23rem] mt-1">
-      <div className="bg-[#202327] w-full p-3 focus:outline-red-200 flex items-center gap-4 rounded-full ">
-        <IoSearch className="text-slate-500 text-xl" />
-        <input
-          type="text"
-          value={search}
-          className="bg-[#202327] w-full focus:outline-none "
-          placeholder="Search"
-          onChange={(e) => setSearch(e.target.value)}
-        />
+    <div className="ml-8 flex flex-col w-[23rem] mt-1 border border-slate-700 rounded-lg">
+      <div className="p-2 flex flex-col">
+        <div>
+          <span className="font-extrabold text-lg">Who to Follow</span>
+        </div>
+        <div>
+          {data?.getRecommendedPeople ? data.getRecommendedPeople.map((person => <RecommendedPeopleCard person = {person} />)) : null}
+        </div>
       </div>
     </div>
   );
+}
+
+const RecommendedPeopleCard: React.FC<{person: User}> = ({person}) => {
+  const handlwFollwoUser = async () => {
+    await gqlClient.request(FollowUser, {followingId: person.id})
+    queryClient.invalidateQueries({ queryKey: ['recommendedPeople'] })
+  }
+  return (
+    <div className="flex justify-between">
+      <div className="flex">
+      <FaRegCircleUser className="text-5xl pr-2" /> 
+      <Link to={`${person.id}`} className="hover:underline hover:font-bold hover:cursor-pointer">
+        {person.firstName} {person.lastName}
+      </Link>
+      </div>
+      <div>
+        <button className="bg-slate-300 text-black font-medium p-1 rounded-full" 
+        onClick={handlwFollwoUser}
+        >Follow</button>
+      </div>
+    </div>
+  )
 }
 
 
