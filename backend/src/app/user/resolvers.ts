@@ -33,6 +33,10 @@ const queries = {
             console.log(error)
             return null
         }
+    },
+    async getRecommendedPeople (parent: any, {userId}: {userId: string}, ctx: GraphqlContext) {
+        const recommendedPeople = await UserService.recommendedPeople(userId)
+        return recommendedPeople
     }
 }
 

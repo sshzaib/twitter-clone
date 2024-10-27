@@ -6,7 +6,7 @@ import { GoHomeFill } from "react-icons/go";
 import { IoSearch } from "react-icons/io5";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FaRegEnvelope } from "react-icons/fa";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { useGetCurrentUser } from "../hooks/user";
 import { FaRegCircleUser } from "react-icons/fa6";
@@ -18,7 +18,6 @@ export const Layout: React.FC = () => {
   if (!isLoading && !data) {
     navigate("/auth");
   }
-
   if (isLoading) {
       return <>
         <div className="flex items-center justify-center h-screen">
