@@ -18,7 +18,7 @@ export const GetCurrentUser = graphql(`#graphql
 }`)
 
 export const GetUserById = graphql(`#graphql
-  query getUserById($userId: ID) {
+   query getUserById($userId: ID) {
     getUserById(userId: $userId) {
       id
       firstName
@@ -31,6 +31,12 @@ export const GetUserById = graphql(`#graphql
           firstName
           lastName
         }
+      }
+      followers {
+        id
+      }
+      followings {
+        id
       }
     }
   }

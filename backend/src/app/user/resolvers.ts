@@ -24,7 +24,6 @@ const queries = {
     },
     async getUserById (parent: any, {userId}: {userId: string}, ctx: GraphqlContext) {
         try {
-            console.log(userId)
             const user = await UserService.findUserWithId(userId)
             if (!user) {
                 return null
@@ -73,14 +72,14 @@ const extraResolvers = {
             if (!ctx.user || !ctx.user.id) {
                 throw new Error("unauthorized")
             }
-            const followers = await UserService.getFollowers(ctx.user.id)
+            const followers = await UserService.getFollowers(parent.id)
             return followers
         },
         async followings(parent: User, args: any, ctx: GraphqlContext) {
             if (!ctx.user || !ctx.user.id) {
                 throw new Error("unauthorized")
             }
-            const followings = await UserService.getFollowings(ctx.user.id)
+            const followings = await UserService.getFollowings(parent.id)
             return followings
         }
     }

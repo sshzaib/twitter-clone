@@ -6,8 +6,6 @@ import { useParams } from "react-router-dom";
 export const UserProfile = () => {
     const { userId } = useParams();
     const {data} = useGetUserById(userId as string)
-    console.log(userId)
-    console.log(data)
     return (
         <>
       <div className="grid grid-cols-12 cursor-pointer">
@@ -36,6 +34,14 @@ export const UserProfile = () => {
           {data?.getUserById?.firstName}
           {"  "}
           {data?.getUserById?.lastName}
+        </div>
+        <div className="flex mt-4">
+          <div className="mr-4">
+            {data?.getUserById?.followings?.length} Followings  
+          </div>
+          <div>
+            {data?.getUserById?.followers?.length} Followers
+          </div>
         </div>
       </div>
       {data?.getUserById?.tweets && (

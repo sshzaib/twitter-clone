@@ -67,6 +67,7 @@ export class UserService {
 
     public static async getFollowers(userId: string) {
         try {
+            console.log(userId, "aa")
             const followers = await prismaClient.follow.findMany({
                 where: {
                     followingId: userId
@@ -75,6 +76,7 @@ export class UserService {
                     follower: true
                 }
             })
+            console.log(followers)
             return followers.map((follower)=> follower.follower)
         } catch (error) {
             return null
@@ -127,12 +129,10 @@ export class UserService {
                     }
                 },
             })
-            console.log(people)
-            console.log(people[0].following.followers)
             const recommendedPeople = []
             for (const following of people) {
                 for (const followingOfFollowing of following.following.followers) {
-                    if (people.findIndex((el)=> el.following.id == followingOfFollowing.following.id) == -1) {
+                    if (people.findIndex((el)=> el.following.id == followingOfFollowing.following.id) == -1 && followingOfFollowing.following.id !== userId) {
                         recommendedPeople.push(followingOfFollowing.following)
                     }
                 }

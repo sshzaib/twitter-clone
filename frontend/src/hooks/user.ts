@@ -6,7 +6,6 @@ export const useGetCurrentUser = () => {
    const {data, isLoading} =  useQuery({
         queryKey: ['currentUser'],
         queryFn: () => {
-            console.log("request")
             return gqlClient.request(GetCurrentUser)
         },
     })
