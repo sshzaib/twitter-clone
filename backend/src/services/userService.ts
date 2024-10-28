@@ -1,6 +1,8 @@
 import { User } from "@prisma/client";
 import { prismaClient } from "../clients/prismaClient";
 import { JWT } from "./jwtService";
+import { redisClient } from "../clients/redisClient";
+import { RedisService } from "./redisService";
 
 export class UserService {
     public static async loginUser({email, password}: {email: string, password: string}) {
@@ -59,6 +61,7 @@ export class UserService {
                     followingId
                 }
             })
+            await RedisService.Delete(`RecommendedUsers:${followerId}`)
             return result ? true : false
         } catch (error) {
             throw new Error("User not found")
@@ -67,7 +70,6 @@ export class UserService {
 
     public static async getFollowers(userId: string) {
         try {
-            console.log(userId, "aa")
             const followers = await prismaClient.follow.findMany({
                 where: {
                     followingId: userId
@@ -76,7 +78,6 @@ export class UserService {
                     follower: true
                 }
             })
-            console.log(followers)
             return followers.map((follower)=> follower.follower)
         } catch (error) {
             return null
@@ -102,7 +103,7 @@ export class UserService {
 
     public static async unfollowUser(followerId: string, followingId: string) {
         try {
-            await prismaClient.follow.delete({
+            const user = await prismaClient.follow.delete({
                 where: {
                     followerId_followingId: {
                         followerId,
@@ -110,7 +111,8 @@ export class UserService {
                     }
                 }
             })
-            return true
+            await RedisService.Delete(`RecommendedUsers:${followerId}`)
+            return user ? true : false
         } catch (error) {
             console.log(error)
             return false
@@ -119,6 +121,11 @@ export class UserService {
 
     public static async recommendedPeople(userId: string){
         try {
+            const cachedRecommendedPeople = JSON.parse(await redisClient.get(`RecommendedUsers:${userId}`))
+            if (cachedRecommendedPeople) {
+                return cachedRecommendedPeople
+            }
+
             const people = await prismaClient.follow.findMany({
                 where: {
                     followerId: userId
@@ -137,6 +144,7 @@ export class UserService {
                     }
                 }
             }
+            await RedisService.Add(`RecommendedUsers:${userId}`, JSON.stringify(recommendedPeople))
             return recommendedPeople
         } catch (error) {
             console.log(error)
