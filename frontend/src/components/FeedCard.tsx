@@ -4,6 +4,9 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FC } from 'react';
 import { Link } from "react-router-dom";
+import { gqlClient } from "../clients/graphqlClient";
+import { LikeTweet, UnlikeTweet } from "../graphql/mutation/tweet";
+import { queryClient } from "../main";
 
 export interface FeedCardProps {
   tweet: {
@@ -13,10 +16,29 @@ export interface FeedCardProps {
       firstName: string
       lastName: string
       id: string
-    }
-  }
+    },
+    likedBy: {
+      id: string
+    }[]
+  },
+  userId: string
 }
-export const FeedCard:FC<FeedCardProps> = ({tweet}) => {
+
+
+
+
+
+
+
+export const FeedCard:FC<FeedCardProps> = ({tweet, userId}) => {
+  const handleLikeTweet = async () => {
+    if (tweet.likedBy.some(el => el.id == userId)) {
+      await gqlClient.request(UnlikeTweet, {tweetId: tweet.id})
+    } else {
+      await gqlClient.request(LikeTweet, {tweetId: tweet.id})
+    }
+    await queryClient.invalidateQueries({ queryKey: ['getAllTweets'] })
+  }
   return (
     <div className="grid grid-cols-12 mt-2 px-4 border-b border-slate-900 ">
       <div className="col-span-1 ">
@@ -37,9 +59,11 @@ export const FeedCard:FC<FeedCardProps> = ({tweet}) => {
           <div className="text-2xl  hover:text-[#029262] text-slate-500 hover:bg-[#071A14] rounded-full p-2 transition-all">
             <BiRepost />
           </div>
-          <div className="text-xl  text-slate-500 hover:text-[#f91880] hover:bg-[#200914] rounded-full p-2 transition-all">
+          <button className={`text-xl text-slate-500 ${tweet.likedBy.some(item => item.id === userId) ? "text-[#f91880]" : ""}  hover:bg-[#200914] rounded-full p-2 transition-all`}
+          onClick={handleLikeTweet}
+          >
             <FaRegHeart />
-          </div>
+          </button>
         </div>
       </div>
     </div>

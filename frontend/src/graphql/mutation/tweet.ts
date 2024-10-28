@@ -8,3 +8,15 @@ export const CreateTweet = graphql(`#graphql
         }
     }
 `)
+
+export const LikeTweet = graphql(`#graphql
+    mutation likeTweet($tweetId: String) {
+        LikeTweet(tweetId: $tweetId)
+    }
+`)
+
+export const UnlikeTweet = graphql(`#graphql
+    mutation Mutation($tweetId: String) {
+        UnlikeTweet(tweetId: $tweetId)
+    }
+`)

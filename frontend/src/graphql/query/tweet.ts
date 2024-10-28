@@ -6,10 +6,13 @@ export const GetAllTweets = graphql(`#graphql
             id
             content
             author {
+            id
             firstName
             lastName
-            id
             }
+          likedBy {
+            id
+          }
         }
     }
 

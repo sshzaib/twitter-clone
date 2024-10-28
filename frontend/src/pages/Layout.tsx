@@ -12,7 +12,6 @@ import { useGetCurrentUser, useGetRecommendedPeople } from "../hooks/user";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { BiLogOut } from "react-icons/bi";
 import { gqlClient } from "../clients/graphqlClient";
-import { GetRecommendedPeople } from "../graphql/query/user";
 import { FollowUser } from "../graphql/mutation/user";
 import { queryClient } from "../main";
 
