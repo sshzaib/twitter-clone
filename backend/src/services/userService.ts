@@ -62,6 +62,10 @@ export class UserService {
                 }
             })
             await RedisService.Delete(`RecommendedUsers:${followerId}`)
+            await RedisService.Delete(`Followers:${followerId}`)
+            await RedisService.Delete(`Followings:${followerId}`)
+            await RedisService.Delete(`Followers:${followingId}`)
+            await RedisService.Delete(`Followings:${followingId}`)
             return result ? true : false
         } catch (error) {
             throw new Error("User not found")
@@ -122,6 +126,11 @@ export class UserService {
                 }
             })
             await RedisService.Delete(`RecommendedUsers:${followerId}`)
+            await RedisService.Delete(`Followers:${followerId}`)
+            await RedisService.Delete(`Followings:${followerId}`)
+            await RedisService.Delete(`Followers:${followingId}`)
+            await RedisService.Delete(`Followings:${followingId}`)
+
             return user ? true : false
         } catch (error) {
             console.log(error)
