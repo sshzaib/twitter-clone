@@ -21,6 +21,8 @@ export const types = `#graphql
         followers: [User]
         followings: [User]
 
+        likedTweets: [Tweet]
+        
         tweets: [Tweet]
     }
 `;

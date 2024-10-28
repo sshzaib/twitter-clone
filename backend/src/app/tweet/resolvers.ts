@@ -29,14 +29,40 @@ const mutations = {
         } catch (error) {
             console.log(error)
         }
-    }
+    },
+
+    async LikeTweet(parent: any, {tweetId}: {tweetId: string}, ctx: GraphqlContext) {
+        if (!ctx.user) {
+            throw new Error("Unauthorized")
+        }
+
+        return await TweetService.LikeTweet(ctx.user.id, tweetId)
+    }, 
+
+    async UnlikeTweet(parent: any, {tweetId}: {tweetId: string}, ctx: GraphqlContext) {
+        if (!ctx.user) {
+            throw new Error("Unauthorized")
+        }
+
+        return await TweetService.UnlikeTweet(ctx.user.id, tweetId)
+    }, 
 }
 
 const extraResolvers = {
     Tweet: {
-        async author(parent: Tweet, args: any, cxt: GraphqlContext) {
+        async author(parent: Tweet, args: any, ctx: GraphqlContext) {
+            if (!ctx.user) {
+                throw new Error("Unauthorized")
+            }
             const user = await UserService.findUserWithId(parent.authorId)
             return user
+        },
+        async likedBy(parent: Tweet, args: any, ctx: GraphqlContext) {
+            if (!ctx.user) {
+                throw new Error("Unauthorized")
+            }
+            const usersThatLikedTweet = await TweetService.getUsersThatLikedTweet(parent.id)
+            return usersThatLikedTweet
         }
     }
 }

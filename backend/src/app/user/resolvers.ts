@@ -81,6 +81,13 @@ const extraResolvers = {
             }
             const followings = await UserService.getFollowings(parent.id)
             return followings
+        },
+        async likedTweets (parent: User, args: any, ctx: GraphqlContext) {
+            if (!ctx.user || !ctx.user.id) {
+                throw new Error("unauthorized")
+            }
+            const likedTweets = await TweetService.getLikedTweets(parent.id)
+            return likedTweets
         }
     }
 }

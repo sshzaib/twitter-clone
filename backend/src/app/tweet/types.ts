@@ -6,7 +6,7 @@ export const types = `#graphql
     type Tweet {
         id: ID!
         content: String!
-
         author: User
+        likedBy: [User]
     }
 `
