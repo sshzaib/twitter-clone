@@ -159,6 +159,10 @@ export class UserService {
             for (const following of people) {
                 for (const followingOfFollowing of following.following.followers) {
                     if (people.findIndex((el)=> el.following.id == followingOfFollowing.following.id) == -1 && followingOfFollowing.following.id !== userId) {
+                        if (recommendedPeople.length >= 5) {
+                            await RedisService.Add(`RecommendedUsers:${userId}`, JSON.stringify(recommendedPeople))
+                            return recommendedPeople
+                        }
                         recommendedPeople.push(followingOfFollowing.following)
                     }
                 }
