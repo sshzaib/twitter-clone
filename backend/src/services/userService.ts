@@ -70,6 +70,10 @@ export class UserService {
 
     public static async getFollowers(userId: string) {
         try {
+            const cachedFollowers = JSON.parse(await RedisService.Get(`Followers:${userId}`))
+            if (cachedFollowers) {
+                return cachedFollowers
+            }
             const followers = await prismaClient.follow.findMany({
                 where: {
                     followingId: userId
@@ -78,7 +82,8 @@ export class UserService {
                     follower: true
                 }
             })
-            return followers.map((follower)=> follower.follower)
+            await RedisService.AddWithExpiration(`Followers:${userId}`, JSON.stringify(followers.map((follower) => follower.follower)))
+            return followers.map((follower) => follower.follower)
         } catch (error) {
             return null
         }
@@ -86,6 +91,10 @@ export class UserService {
 
     public static async getFollowings(userId: string) {
         try {
+            const cachedFollowings = JSON.parse(await RedisService.Get(`Followings:${userId}`))
+            if (cachedFollowings) {
+                return cachedFollowings
+            }
             const followings = await prismaClient.follow.findMany({
                 where: {
                     followerId: userId
@@ -94,7 +103,8 @@ export class UserService {
                     following: true
                 }
             })
-            return followings.map((follower)=> follower.following)
+            await RedisService.AddWithExpiration(`Followings:${userId}`, JSON.stringify(followings.map((following) => following.following)))
+            return followings.map((following)=> following.following)
         } catch (error) {
             console.log(error)
             return null
@@ -121,7 +131,7 @@ export class UserService {
 
     public static async recommendedPeople(userId: string){
         try {
-            const cachedRecommendedPeople = JSON.parse(await redisClient.get(`RecommendedUsers:${userId}`))
+            const cachedRecommendedPeople = JSON.parse(await RedisService.Get(`RecommendedUsers:${userId}`))
             if (cachedRecommendedPeople) {
                 return cachedRecommendedPeople
             }
