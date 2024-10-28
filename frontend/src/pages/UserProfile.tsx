@@ -1,22 +1,36 @@
 import { FaArrowLeft, FaRegCircleUser, FaRegComment, FaRegHeart } from "react-icons/fa6"
 import { useGetCurrentUser, useGetUserById } from "../hooks/user"
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useNavigation, useParams } from "react-router-dom";
 import { gqlClient } from "../clients/graphqlClient";
 import { LikeTweet, UnlikeTweet } from "../graphql/mutation/tweet";
 import { queryClient } from "../main";
 import { BiRepost } from "react-icons/bi";
+import { FollowUser, UnfollowUser } from "../graphql/mutation/user";
 
-export const UserProfile = () => {
+export const UserProfile:React.FC = () => {
     const { userId } = useParams();
     const {data} = useGetUserById(userId as string)
     const user = useGetCurrentUser()
+    const navigate = useNavigate()
+    
+    const handleFollow = async () => {  
+      if (data?.getUserById?.followers?.some(el => el?.id === user.data?.id)) {
+        await gqlClient.request(UnfollowUser, {followingId: userId})
+      } else {
+        await gqlClient.request(FollowUser, {followingId: userId})
+      }
+      await queryClient.invalidateQueries({ queryKey: ['user'] })
+      await queryClient.invalidateQueries({ queryKey: ['recommendedPeople'] })
+    }
 
     return (
         <>
       <div className="grid grid-cols-12 cursor-pointer">
         <div className="col-span-1 flex items-center justify-center pl-4">
-          <div className="hover:bg-[#181919] p-2 rounded-full">
-            <FaArrowLeft />
+          <div className="hover:bg-[#181919] p-3 rounded-full">
+            <button onClick={() => navigate("/")}>
+              <FaArrowLeft />
+            </button>
           </div>
         </div>
         <div className="col-span-11">
@@ -36,7 +50,9 @@ export const UserProfile = () => {
       </div>
       <div className="w-full h-56 border-b border-[#2F3336] pl-4">
         <div className="flex justify-end pt-2">
-          <button className="bg-white rounded-full text-black p-2 mr-2 px-4 hover:bg-slate-300">
+          <button className="bg-white rounded-full text-black p-2 mr-2 px-4 hover:bg-slate-300"
+            onClick={handleFollow}
+          >
             {data?.getUserById?.followers?.some(el => el?.id === user.data?.id) ? "UnFollow" : "Follow"}
           </button>
         </div>

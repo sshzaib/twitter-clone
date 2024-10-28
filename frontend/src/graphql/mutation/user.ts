@@ -11,3 +11,9 @@ export const FollowUser = graphql(`#graphql
   FollowUser(followingId: $followingId)
 }
 `)
+
+export const UnfollowUser = graphql(`#graphql
+  mutation unfollowUser($followingId: String) {
+    UnFollowUser(followingId: $followingId)
+  }
+`)

@@ -177,7 +177,7 @@ const RecommendedPeopleCard: React.FC<{person: User}> = ({person}) => {
       </Link>
       </div>
       <div>
-        <button className="bg-slate-300 text-black font-medium p-1 rounded-full" 
+        <button className="bg-slate-300 text-black font-medium p-1 px-2 rounded-full hover:bg-slate-400 " 
         onClick={handlwFollwoUser}
         >Follow</button>
       </div>
