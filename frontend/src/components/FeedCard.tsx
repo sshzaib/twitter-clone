@@ -24,15 +24,9 @@ export interface FeedCardProps {
   userId: string
 }
 
-
-
-
-
-
-
 export const FeedCard:FC<FeedCardProps> = ({tweet, userId}) => {
   const handleLikeTweet = async () => {
-    if (tweet.likedBy.some(el => el.id == userId)) {
+    if (tweet.likedBy.some(el => el.id === userId)) {
       await gqlClient.request(UnlikeTweet, {tweetId: tweet.id})
     } else {
       await gqlClient.request(LikeTweet, {tweetId: tweet.id})

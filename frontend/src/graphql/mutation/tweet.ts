@@ -16,7 +16,7 @@ export const LikeTweet = graphql(`#graphql
 `)
 
 export const UnlikeTweet = graphql(`#graphql
-    mutation Mutation($tweetId: String) {
+    mutation unLikeTweet($tweetId: String) {
         UnlikeTweet(tweetId: $tweetId)
     }
 `)
