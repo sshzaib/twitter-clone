@@ -9,7 +9,9 @@ export class RedisService {
         await redisClient.set(key, value, "EX", 1 * 24 * 60 * 60) // cache for a day
     }
 
-
+    public static async AddWithLowExpiration (key: string, value: string) {
+        await redisClient.set(key, value, "EX", 5) // cache for 5 seconds
+    }
     public static async Delete(key: string) {
         await redisClient.del(key)
     }
