@@ -27,7 +27,7 @@ services:
       - redis
     ports:
       - "4000:4000"
-    command: /bin/sh -c "npx prisma migrate deploy && npx prisma generate && npm run dev"
-
+      - "5555:5555"
+    command: /bin/sh -c "npx prisma migrate deploy && npx prisma generate && npm run start:dev"
 volumes:
   postgres_data:
