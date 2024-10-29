@@ -1,13 +1,11 @@
 import { FaXTwitter } from "react-icons/fa6";
 import { Auth } from "./Auth";
 import { gqlClient } from "../clients/graphqlClient";
-import { QueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SignupUser } from "../graphql/mutation/user";
 
 export const Signup = () => {
-    const queryClient = new QueryClient()
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")

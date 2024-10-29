@@ -49,13 +49,17 @@ export const UserProfile:React.FC = () => {
           </div>
       </div>
       <div className="w-full h-56 border-b border-[#2F3336] pl-4">
-        <div className="flex justify-end pt-2">
-          <button className="bg-white rounded-full text-black p-2 mr-2 px-4 hover:bg-slate-300"
+      {userId !== user.data?.id 
+        ? <div className="flex justify-end pt-2">
+            <button className="bg-white rounded-full text-black p-2 mr-2 px-4 hover:bg-slate-300"
             onClick={handleFollow}
-          >
+            >
             {data?.getUserById?.followers?.some(el => el?.id === user.data?.id) ? "UnFollow" : "Follow"}
-          </button>
-        </div>
+            </button>
+          </div> 
+        : null}
+
+        
         <div className="pt-20 font-bold text-3xl flex">
           {data?.getUserById?.firstName}
           {"  "}
