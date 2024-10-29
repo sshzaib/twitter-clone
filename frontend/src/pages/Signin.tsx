@@ -2,12 +2,10 @@ import { FaXTwitter } from "react-icons/fa6";
 import { Auth } from "./Auth";
 import { gqlClient } from "../clients/graphqlClient";
 import { LoginUser } from "../graphql/query/user";
-import { QueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Signin = () => {
-    const queryClient = new QueryClient()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate()

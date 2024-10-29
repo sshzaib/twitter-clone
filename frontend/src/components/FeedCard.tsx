@@ -53,7 +53,7 @@ export const FeedCard:FC<FeedCardProps> = ({tweet, userId}) => {
           <div className="text-2xl  hover:text-[#029262] text-slate-500 hover:bg-[#071A14] rounded-full p-2 transition-all">
             <BiRepost />
           </div>
-          <button className={`text-xl text-slate-500 ${tweet.likedBy.some(item => item.id === userId) ? "text-[#f91880]" : ""}  hover:bg-[#200914] rounded-full p-2 transition-all`}
+          <button className={`text-xl text-slate-500 ${tweet.likedBy.some(item => item.id === userId) ? "text-[#da3280]" : ""}  hover:bg-[#200914] rounded-full p-2 transition-all`}
           onClick={handleLikeTweet}
           >
             <FaRegHeart />

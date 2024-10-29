@@ -1,7 +1,6 @@
 import { FaXTwitter } from "react-icons/fa6";
 import { Auth } from "./Auth";
 import { gqlClient } from "../clients/graphqlClient";
-import { LoginUser } from "../graphql/query/user";
 import { QueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,8 +17,8 @@ export const Signup = () => {
     const handleSignup = async () => {
       const user = await gqlClient.request(SignupUser, {user: {email, password, firstName, lastName}})
       if (user.SignupUser) {
-        localStorage.setItem("__twitter_token", user.SignupUser)
-        queryClient.invalidateQueries({ queryKey: ['currentUser'] })
+        localStorage.setItem("__twitter_token", `Bearer ${user.SignupUser}`)
+        gqlClient.setHeader("Authorization", localStorage.getItem("__twitter_token") as string)
         navigate("/")
       }
     }
