@@ -1,6 +1,6 @@
 import { FaArrowLeft, FaRegCircleUser, FaRegComment, FaRegHeart } from "react-icons/fa6"
 import { useGetCurrentUser, useGetUserById } from "../hooks/user"
-import { Link, useNavigate, useNavigation, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { gqlClient } from "../clients/graphqlClient";
 import { LikeTweet, UnlikeTweet } from "../graphql/mutation/tweet";
 import { queryClient } from "../main";

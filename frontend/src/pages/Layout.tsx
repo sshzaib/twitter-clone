@@ -31,14 +31,14 @@ export const Layout: React.FC = () => {
    if (!isLoading && data) {
     return (
       <div className="grid grid-cols-12 h-screen w-screen">
-        <div className="col-span-3 h-screen sticky top-0 flex justify-end pr-10">
+        <div className="col-span-2 md:col-span-3 h-screen sticky top-0 flex justify-end pr-2">
            {/* @ts-ignore */}
         <Sidebar user = {data}/>
         </div>
-        <div className="col-span-9 h-screen overflow-y-auto">
+        <div className="col-span-10 md:col-span-9 h-screen overflow-y-auto">
           <div className="grid grid-cols-12 h-full">
-            <div className="col-span-6 border-x border-slate-600"><Outlet /></div>
-            <div className="col-span-6">
+            <div className="lg:col-span-6 col-span-12 border-x border-slate-600"><Outlet /></div>
+            <div className="lg:col-span-6 hidden lg:block">
               <PeopleRecommendation user = {data} />
             </div>
           </div>
@@ -108,7 +108,7 @@ const Sidebar: React.FC<{user: User}> = ({user}) => {
               onClick={()=> navigate(item.navigate)}
             >
               <span className="text-3xl">{item.icon}</span>
-              <span>{item.title}</span>
+              <span className="hidden md:block">{item.title}</span>
             </button>
           </li>
         ))}
@@ -120,25 +120,25 @@ const Sidebar: React.FC<{user: User}> = ({user}) => {
               onClick={handleLogout}
             >
               <span className="text-3xl"><BiLogOut /></span>
-              <span>Logout</span>
+              <span className="hidden md:block">Logout</span>
             </button>
           </li>
       </ul>
-      <div className="mt-4 ">
-        <button className="bg-[#1d9bf0] rounded-full w-full py-3.5 font-bold">
+      {/* <div className="mt-4 flex justify-center ">
+        <button className="bg-[#1d9bf0] rounded-full w-1/2 py-3.5 font-bold">
           Post
         </button>
-      </div>
+      </div> */}
       <div className="absolute bottom-5 flex items-center gap-4 hover:bg-[#181818] cursor-pointer rounded-full p-3">
         <div className="text-3xl">
           <FaRegCircleUser />
         </div>
         <div className="flex flex-col ">
-          <div className="font-medium flex text-sm">
+          <div className="font-medium text-sm hidden md:block">
             {user.firstName} {user.lastName}
           </div>
         </div>
-        <div>
+        <div className="hidden md:block">
            <BsThreeDots /> 
         </div>
       </div>
@@ -150,7 +150,7 @@ const Sidebar: React.FC<{user: User}> = ({user}) => {
 const PeopleRecommendation: React.FC<{user: User}> = ({user}) => {
   const {data} = useGetRecommendedPeople(user.id)
   return (
-    <div className="ml-8 flex flex-col w-[23rem] mt-1 border border-slate-700 rounded-lg">
+    <div className="ml-8 flex flex-col w-[22rem] mt-1 border border-slate-700 rounded-lg">
       <div className="p-2 flex flex-col">
         <div>
           <span className="font-extrabold text-lg">Who to Follow</span>

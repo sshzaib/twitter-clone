@@ -6,10 +6,10 @@ export const Auth = () => {
   return (
     <div>
       <div className="grid grid-cols-12 h-screen">
-        <div className="col-span-7 flex items-center justify-center">
+        <div className="hidden md:block md:col-span-7 md:flex h-screen items-center justify-center">
           <FaXTwitter className="text-[20rem]" />
         </div>
-        <div className="col-span-5 flex flex-col items-start justify-center">
+        <div className="col-span-12 md:col-span-5 flex flex-col items-center md:items-start justify-center">
           <div className="text-5xl font-extrabold">Happening now</div>
           <div className="w-80">
             <div className="text-2xl font-bold mt-16">Join today.</div>
